@@ -18,6 +18,7 @@
   "homepage": "https://github.com/llOnkelGeorgll/backend-javascript-challenge#readme",
   "dependencies": {
     "express": "^4.16.1",
-    "flickrapi": "^0.6.0"
+    "flickrapi": "^0.6.0",
+    "fs": "0.0.1-security"
   }
 }
