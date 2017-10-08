@@ -5,9 +5,11 @@ const fs = require('fs');
 
 
 const context = {}
+
 context.app = express()
+
 context.http = require('http');
-// Init config
+// import external config file
 context.config = require('./config');
 
 context.fs = fs;

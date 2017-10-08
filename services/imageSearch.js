@@ -5,7 +5,15 @@ module.exports = function(context) {
       res.send('usage: /images?query=yourSearchWordHere')
     }
     else{
-      res.send('ok')
+
+      var searchPhrase = req.query.query
+      
+      if (!searchPhrase == '') {
+        context.flickrSearch(searchPhrase,res)
+      }
+      else {
+        res.send('usage: /images?query=yourSearchWordHere')
+      }
     }
   })
 }
