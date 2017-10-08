@@ -1,0 +1,23 @@
+{
+  "name": "backend-javascript-challenge",
+  "version": "1.0.0",
+  "description": "- Using Javascript or Typescript and framework(s) of your choice (e.g., Express, HAPI, Koa), create an API that accepts a freeform search query and returns a list of matching [Flickr](https://www.flickr.com/services/api/) titles and image URLs for various sizes.  - Limit the response to ten titles (don't bother with pagination).  - This exercise isn't meant to take a long time, so don't spend more than an hour or so on it (unless you really want to).  - Before you start please fork this repo. As your are working on your solution try to commit the changes in small blocks.  - When you are finished, please write a short paragraph (or some bullet points) describing what you perceive to be the pros and cons of your approach (i.e. your code, not your framework choice) plus any alternatives you considered, and add this to your PR. We will not be judging your writing style or grammar. - Feel free to use generators, async/await, promises, whatever you think is most useful and expressive for the given problem.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/llOnkelGeorgll/backend-javascript-challenge.git"
+  },
+  "author": "georg weber",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/llOnkelGeorgll/backend-javascript-challenge/issues"
+  },
+  "homepage": "https://github.com/llOnkelGeorgll/backend-javascript-challenge#readme",
+  "dependencies": {
+    "express": "^4.16.1",
+    "flickrapi": "^0.6.0"
+  }
+}
