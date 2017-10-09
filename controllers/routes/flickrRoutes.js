@@ -11,7 +11,14 @@ exports.getImages = function(req, res) {
 
     if (!searchPhrase == '') {
       flickModel.flickrSearch(searchPhrase,(images) =>{
-        res.send(images);
+        if (images == null) {
+          //error -->
+          res.send({message: 'error during request to flickr server'})
+        }
+        else {
+          res.send(images);
+        }
+
       });
 
     }
