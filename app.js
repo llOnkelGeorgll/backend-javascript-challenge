@@ -1,48 +1,25 @@
-
+const http = require('http');
 const express = require('express');
-const fs = require('fs');
+const app = express();
+const config = require('./config');
+
+const flickrRoutes = require('./controllers/routes/flickrRoutes');
 
 
 
-const context = {}
-
-context.app = express()
-
-context.http = require('http');
-// import external config file
-context.config = require('./config');
-
-context.fs = fs;
 
 
-// Load components and modules
-const dirs = ['controllers', 'services'];
+//set up route to flickr request
+app.route("/images").get(flickrRoutes.getImages);
 
-dirs.forEach(function (compName) {
-	console.log('Loading component ' + compName);
-	const fileNames = fs.readdirSync('./' + compName);
-
-	context[compName] = {};
-	fileNames.forEach(function (fileName) {
-		if (fileName.indexOf('.js') >= 0) {
-			var moduleName = fileName.replace('.js', '');
-			var module = require('./' + compName + '/' + moduleName);
-			context[compName][moduleName] = module;
-			context[compName][moduleName](context);
-			console.log('     LOADED MODULE ' + compName + '/' + moduleName);
-		}
-	});
+//set default response
+app.use(function(req, res){
+	res.send("Welcome to flickr image search");
 });
 
-//set standard response
-context.app.use(function(req, res){
-       res.send("usage: /images?query=yourSearchWordHere");
-   });
-
-
-context.http.createServer(context.app).listen(context.config.app.port, function () {
-	console.log('Express server listening on port ' + context.config.app.port);
+http.createServer(app).listen(config.app.port, function () {
+	console.log('Express server listening on port ' + config.app.port);
 })
 
 //export so testing framework can access the server
-module.exports = context.app
+module.exports = app;

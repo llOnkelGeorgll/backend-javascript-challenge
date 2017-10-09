@@ -1,10 +1,11 @@
-module.exports = function(context) {
+const config = require('../../config')
 
 
+  var flickrRef = null
   //init Flickr
   var Flickr = require("flickrapi"),
   flickrOptions = {
-    api_key: context.config.flickr.key
+    api_key: config.flickr.key
   };
   Flickr.tokenOnly(flickrOptions, function(error, flickr) {
     // we can now use "flickr" as our API object,
@@ -13,14 +14,14 @@ module.exports = function(context) {
       console.log('unable to initialize Flickr')
     }
     else {
-      context.flickr = flickr
+      flickrRef = flickr;
     }
   });
 
 
-  context.flickrSearch = function(searchPhrase, res){
-    if (context.flickr != undefined) {
-      context.flickr.photos.search({
+  module.exports.flickrSearch = function(searchPhrase, imgCallback){
+    if (flickrRef != null) {
+      flickrRef.photos.search({
         text: searchPhrase,
         page: 1,
         per_page: 10,
@@ -28,20 +29,20 @@ module.exports = function(context) {
         sort: 'relevance'
       }, function(err, result) {
 
-        //create response
-        var response = []
+        //create image list
+        var imgList = []
 
         var photos = result.photos.photo
         var matchFound = false
         for (var photoCount in photos) {
 
           //check if image with same title exists already
-          for (var resCount in response){
-            if (response[resCount].title == photos[photoCount].title) {
+          for (var resCount in imgList){
+            if (imgList[resCount].title == photos[photoCount].title) {
               //found match -> add url to existing object
               //add only if object actually has url info
               if (photos[photoCount].url_o !== undefined) {
-                response[resCount].urls.push({width: photos[photoCount].width_o, height: photos[photoCount].height_o, url:photos[photoCount].url_o})
+                imgList[resCount].urls.push({width: photos[photoCount].width_o, height: photos[photoCount].height_o, url:photos[photoCount].url_o})
               }
               matchFound = true
               break
@@ -49,15 +50,13 @@ module.exports = function(context) {
 
           }
           if (!matchFound && photos[photoCount].url_o !== undefined) {
-            response.push({title: photos[photoCount].title, urls: [{width: photos[photoCount].width_o, height: photos[photoCount].height_o, url:photos[photoCount].url_o}]})
+            imgList.push({title: photos[photoCount].title, urls: [{width: photos[photoCount].width_o, height: photos[photoCount].height_o, url:photos[photoCount].url_o}]})
           }
           matchFound = false
         }
-        res.setHeader('Content-Type', 'application/json');
-        res.send(response)
+
+        imgCallback(imgList)
       });
     }
 
-
   }
-}
