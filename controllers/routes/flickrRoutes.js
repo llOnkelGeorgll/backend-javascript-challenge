@@ -2,6 +2,7 @@ const flickModel = require('../models/flickrModel')
 
 exports.getImages = function(req, res) {
   res.setHeader('Content-Type', 'application/json');
+  
   if (req.query.query == undefined) {
     res.send({message: 'usage: /images?query=yourSearchWordHere'})
   }
@@ -12,7 +13,6 @@ exports.getImages = function(req, res) {
     if (!searchPhrase == '') {
       flickModel.flickrSearch(searchPhrase,(images) =>{
         if (images == null) {
-          //error -->
           res.send({message: 'error during request to flickr server'})
         }
         else {
