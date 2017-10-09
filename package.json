@@ -20,5 +20,15 @@
     "express": "^4.16.1",
     "flickrapi": "^0.6.0",
     "fs": "0.0.1-security"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "mocha": "^2.4.5"
+  },
+  "scripts": {
+    "start": "SET NODE_ENV=dev && node app.js",
+    "test": "mocha --timeout 10000"
   }
+
 }
